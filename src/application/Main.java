@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	private static Scene mainScene;
+
 	@Override
 	public void start(Stage stage) {
 		try {
@@ -15,7 +17,7 @@ public class Main extends Application {
 			ScrollPane scrollPane = loader.load();
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
-			Scene mainScene = new Scene(scrollPane);
+			mainScene = new Scene(scrollPane);
 			stage.setScene(mainScene);
 			stage.setTitle("Projeto JavaFX e JDBC");
 			stage.show();
@@ -26,6 +28,10 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public static Scene getMainScene() {
+		return mainScene;
 	}
 
 }
