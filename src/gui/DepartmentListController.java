@@ -48,6 +48,7 @@ public class DepartmentListController implements Initializable {
 		this.tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		this.tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+		// redimensionar tamanho da table view
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
 	}
