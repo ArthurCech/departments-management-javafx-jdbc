@@ -25,11 +25,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Seller;
 import model.exceptions.ValidationException;
+import model.services.DepartmentService;
 import model.services.SellerService;
 
 public class SellerFormController implements Initializable {
 
 	private SellerService sellerService;
+	private DepartmentService departmentService;
 	private Seller seller;
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
@@ -150,8 +152,9 @@ public class SellerFormController implements Initializable {
 		}
 	}
 
-	public void setSellerService(SellerService sellerService) {
+	public void setServices(SellerService sellerService, DepartmentService departmentService) {
 		this.sellerService = sellerService;
+		this.departmentService = departmentService;
 	}
 
 	public void setSeller(Seller seller) {
