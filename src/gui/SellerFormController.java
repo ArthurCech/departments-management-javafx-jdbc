@@ -87,17 +87,17 @@ public class SellerFormController implements Initializable {
 			throw new IllegalStateException("Seller was null");
 		}
 		if (sellerService == null) {
-			throw new IllegalStateException("SellerService was null");
+			throw new IllegalStateException("sellerService was null");
 		}
 		try {
 			seller = getFormData();
 			sellerService.saveOrUpdate(seller);
-			this.notifyDataChangeListeners();
+			notifyDataChangeListeners();
 			Utils.currentStage(actionEvent).close();
-		} catch (ValidationException e) {
-			setErrorMessages(e.getErrors());
-		} catch (DbException e) {
-			Alerts.showAlert("Error saving Seller", null, e.getMessage(), AlertType.ERROR);
+		} catch (ValidationException exception) {
+			setErrorMessages(exception.getErrors());
+		} catch (DbException exception) {
+			Alerts.showAlert("Error saving Seller", null, exception.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -114,7 +114,6 @@ public class SellerFormController implements Initializable {
 		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
 			validationException.addError("name", "Field can't be empty");
 		}
-
 		seller.setName(txtName.getText());
 
 		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
@@ -159,7 +158,7 @@ public class SellerFormController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		this.initializeNodes();
+		initializeNodes();
 	}
 
 	private void initializeNodes() {
@@ -168,7 +167,7 @@ public class SellerFormController implements Initializable {
 		Constraints.setTextFieldDouble(txtBaseSalary);
 		Constraints.setTextFieldMaxLength(txtEmail, 60);
 		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
-		this.initializeComboBoxDepartment();
+		initializeComboBoxDepartment();
 	}
 
 	public void updateFormData() {
@@ -193,7 +192,7 @@ public class SellerFormController implements Initializable {
 
 	public void loadAssociatedObjects() {
 		if (departmentService == null) {
-			throw new IllegalStateException("DepartmentService was null");
+			throw new IllegalStateException("departmentService was null");
 		}
 		List<Department> departments = departmentService.findAll();
 		observableListDepartment = FXCollections.observableArrayList(departments);
@@ -222,7 +221,7 @@ public class SellerFormController implements Initializable {
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener dataChangeListener) {
-		this.dataChangeListeners.add(dataChangeListener);
+		dataChangeListeners.add(dataChangeListener);
 	}
 
 }

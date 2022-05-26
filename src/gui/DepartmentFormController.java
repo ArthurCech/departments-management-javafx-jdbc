@@ -50,17 +50,17 @@ public class DepartmentFormController implements Initializable {
 			throw new IllegalStateException("Department was null");
 		}
 		if (departmentService == null) {
-			throw new IllegalStateException("DepartmentService was null");
+			throw new IllegalStateException("departmentService was null");
 		}
 		try {
 			department = getFormData();
 			departmentService.saveOrUpdate(department);
-			this.notifyDataChangeListeners();
+			notifyDataChangeListeners();
 			Utils.currentStage(actionEvent).close();
-		} catch (ValidationException e) {
-			setErrorMessages(e.getErrors());
-		} catch (DbException e) {
-			Alerts.showAlert("Error saving Department", null, e.getMessage(), AlertType.ERROR);
+		} catch (ValidationException exception) {
+			setErrorMessages(exception.getErrors());
+		} catch (DbException exception) {
+			Alerts.showAlert("Error saving Department", null, exception.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -102,7 +102,7 @@ public class DepartmentFormController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		this.initializeNodes();
+		initializeNodes();
 	}
 
 	private void initializeNodes() {
@@ -114,8 +114,12 @@ public class DepartmentFormController implements Initializable {
 		if (department == null) {
 			throw new IllegalStateException("Department was null");
 		}
-		this.txtId.setText(String.valueOf(department.getId()));
-		this.txtName.setText(department.getName());
+		txtId.setText(String.valueOf(department.getId()));
+		txtName.setText(department.getName());
+	}
+
+	public void subscribeDataChangeListener(DataChangeListener dataChangeListener) {
+		dataChangeListeners.add(dataChangeListener);
 	}
 
 	public void setDepartmentService(DepartmentService departmentService) {
@@ -124,10 +128,6 @@ public class DepartmentFormController implements Initializable {
 
 	public void setDepartment(Department department) {
 		this.department = department;
-	}
-
-	public void subscribeDataChangeListener(DataChangeListener dataChangeListener) {
-		this.dataChangeListeners.add(dataChangeListener);
 	}
 
 }

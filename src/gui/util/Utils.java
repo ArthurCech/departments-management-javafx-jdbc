@@ -28,9 +28,9 @@ public class Utils {
 		}
 	}
 
-	public static Double tryParseToDouble(String str) {
+	public static Double tryParseToDouble(String value) {
 		try {
-			return Double.parseDouble(str);
+			return Double.parseDouble(value);
 		} catch (NumberFormatException exception) {
 			return null;
 		}

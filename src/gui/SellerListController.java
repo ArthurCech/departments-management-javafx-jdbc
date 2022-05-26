@@ -70,24 +70,24 @@ public class SellerListController implements Initializable, DataChangeListener {
 	public void onBtNewAction(ActionEvent actionEvent) {
 		Stage parentStage = Utils.currentStage(actionEvent);
 		Seller seller = new Seller();
-		this.createDialogForm(seller, "/gui/SellerForm.fxml", parentStage);
+		createDialogForm(seller, "/gui/SellerForm.fxml", parentStage);
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		this.initializeNodes();
+		initializeNodes();
 	}
 
 	private void initializeNodes() {
-		this.tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		this.tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		this.tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		this.tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
 		Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
 		this.tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
 		Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
 
-		// redimensionar tamanho da table view
+		// tamanho do TableView = tamanho da janela/stage
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewSeller.prefHeightProperty().bind(stage.heightProperty());
 	}
@@ -99,8 +99,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 		List<Seller> sellers = sellerService.findAll();
 		observableListSeller = FXCollections.observableArrayList(sellers);
 		tableViewSeller.setItems(observableListSeller);
-		this.initEditButtons();
-		this.initRemoveButtons();
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void createDialogForm(Seller seller, String absoluteName, Stage parentStage) {
@@ -122,14 +122,10 @@ public class SellerListController implements Initializable, DataChangeListener {
 			dialogStage.initOwner(parentStage);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
-		} catch (IOException e) {
-			e.printStackTrace();
-			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		} catch (IOException exception) {
+			exception.printStackTrace();
+			Alerts.showAlert("IO Exception", "Error loading view", exception.getMessage(), AlertType.ERROR);
 		}
-	}
-
-	public void setSellerService(SellerService sellerService) {
-		this.sellerService = sellerService;
 	}
 
 	private void initEditButtons() {
@@ -178,15 +174,19 @@ public class SellerListController implements Initializable, DataChangeListener {
 			try {
 				sellerService.remove(seller);
 				updateTableView();
-			} catch (DbIntegrityException e) {
-				Alerts.showAlert("Error removing seller", null, e.getMessage(), AlertType.ERROR);
+			} catch (DbIntegrityException exception) {
+				Alerts.showAlert("Error removing seller", null, exception.getMessage(), AlertType.ERROR);
 			}
 		}
 	}
 
+	public void setSellerService(SellerService sellerService) {
+		this.sellerService = sellerService;
+	}
+
 	@Override
 	public void onDataChanged() {
-		this.updateTableView();
+		updateTableView();
 	}
 
 }

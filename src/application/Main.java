@@ -17,12 +17,13 @@ public class Main extends Application {
 			ScrollPane scrollPane = loader.load();
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
+			
 			mainScene = new Scene(scrollPane);
 			stage.setScene(mainScene);
 			stage.setTitle("Projeto JavaFX e JDBC");
 			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 
